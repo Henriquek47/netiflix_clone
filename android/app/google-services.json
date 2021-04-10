@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "210293113092",
+    "project_id": "netiflixclone",
+    "storage_bucket": "netiflixclone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210293113092:android:701e3320c5e9fcef89d051",
+        "android_client_info": {
+          "package_name": "com.example.netiflix_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210293113092-4pit25f25qu55sdm23g9tgedve67kuiv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0SnjlenHnGB9IYi8LyQuoD_EmiozNcEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210293113092-4pit25f25qu55sdm23g9tgedve67kuiv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
