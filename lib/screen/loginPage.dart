@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:netiflix_clone/models/user.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -6,6 +8,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final user = Modular.get<User>();
+
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +53,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: TextField(
-                    decoration: InputDecoration.collapsed(
-                      hintText: 'Email',
+                      controller: email,
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Email',
                     ),
                   ))))),
                   Padding(
@@ -64,21 +73,34 @@ class _LoginPageState extends State<LoginPage> {
                     child:  Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: TextField(
-                    decoration: InputDecoration.collapsed(
-                      hintText: 'Senha',
+                      controller: pass,
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Senha',
                     ),
                   ))))),
                   Padding(
                     padding: EdgeInsets.only(top: 35),
-                    child: Container(
+                    child: GestureDetector(
+                      onTap: (){
+
+                        Map<String, dynamic> userData = {
+                          'email': email.text,
+                        };
+
+                        setState(() {
+                          user.signUp(userData: userData, pass: pass.text);
+                        });
+                      },
+                      child: Container(
                       alignment: Alignment.center,
-                      child: Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 20),),
+                      child: !user.isLoading ? Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 20)) :
+                      CircularProgressIndicator(),
                       height: 65,
                       width: 265,
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.all(Radius.circular(10))
-                    ))),
+                    )))),
                 ],
               ),
             )),
