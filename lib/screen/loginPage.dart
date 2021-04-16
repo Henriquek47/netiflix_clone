@@ -9,7 +9,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  final user = Modular.get<User>();
+  final user = Modular.get<UserModel>();
 
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
@@ -82,18 +82,30 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.only(top: 35),
                     child: GestureDetector(
                       onTap: (){
-
-                        Map<String, dynamic> userData = {
-                          'email': email.text,
-                        };
-
                         setState(() {
-                          user.signUp(userData: userData, pass: pass.text);
+                          user.signIn(email.text, pass.text);
+                          print(user.userData['email']);
                         });
                       },
                       child: Container(
                       alignment: Alignment.center,
                       child: !user.isLoading ? Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 20)) :
+                      CircularProgressIndicator(),
+                      height: 65,
+                      width: 265,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    )))),
+                    Padding(
+                    padding: EdgeInsets.only(top: 35),
+                    child: GestureDetector(
+                      onTap: (){
+                        user.signOut();
+                      },
+                      child: Container(
+                      alignment: Alignment.center,
+                      child: !user.isLoading ? Text('Sair', style: TextStyle(color: Colors.white, fontSize: 20)) :
                       CircularProgressIndicator(),
                       height: 65,
                       width: 265,

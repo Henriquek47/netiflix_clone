@@ -6,7 +6,7 @@ class AppModule extends Module{
   
   @override
    final List <Bind> binds = [
-     Bind((i) => User()),
+     Bind((i) => UserModel()),
    ];
 
   @override
