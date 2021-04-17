@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:netiflix_clone/models/user.dart';
 import 'package:netiflix_clone/screen/loginPage.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,9 +26,10 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Container(
-        child: Text('Ola ${!user.isLoggedIn() ? '' : user.texto() == null ? 'null' : user.texto()}'),
-      ),
+      body: ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+        return Container(
+          child: Text('Ola ${!model.isLoggedIn() ? '' : model.texto() == null ? 'null' : model.texto()}'),
+      );}),
     );
   }
 }

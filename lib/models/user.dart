@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-class UserModel{
+class UserModel extends Model{
 
   FirebaseAuth auth = FirebaseAuth.instance;
   UserCredential user;
@@ -12,6 +13,7 @@ class UserModel{
 
   Future<String> signUp({Map<String, dynamic> userData, String pass, VoidCallback onSuccess, VoidCallback onFail})async{
     isLoading = true;
+    notifyListeners();
 
     try{
       await auth.createUserWithEmailAndPassword(email: userData['email'], password: pass).then((user)async{
@@ -19,6 +21,7 @@ class UserModel{
         await _saveUserData(userData);
         isLoading = false;
         print('suuucesso');
+        notifyListeners();
       });
       return 'Signed up';
     } on FirebaseAuthException catch(e){
@@ -28,11 +31,13 @@ class UserModel{
 
   Future signIn(String email, String pass)async{
     isLoading = true;
+    notifyListeners();
 
       await auth.signInWithEmailAndPassword(email: email, password: pass).then((user){
         this.user = user;
         isLoading = false;
         print('sucesso2');
+        notifyListeners();
       }).catchError((e){
         print('$e deu erro aqui');
       });

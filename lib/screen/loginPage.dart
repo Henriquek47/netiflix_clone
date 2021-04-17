@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:netiflix_clone/models/user.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,16 +17,17 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: 1000,
-            height: 1000,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/imageBackground.jpg'),
-                fit: BoxFit.cover
+    return ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+      return Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              width: 1000,
+              height: 1000,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/imageBackground.jpg'),
+                  fit: BoxFit.cover
               )
             ),
           ),
@@ -78,30 +80,29 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'Senha',
                     ),
                   ))))),
-                  Padding(
-                    padding: EdgeInsets.only(top: 35),
-                    child: GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          user.signIn(email.text, pass.text);
-                          print(user.userData['email']);
-                        });
+                   Padding(
+                      padding: EdgeInsets.only(top: 35),
+                      child: GestureDetector(
+                        onTap: (){
+                            model.signIn(email.text, pass.text);
+                            print(model.userData['email']);
                       },
                       child: Container(
                       alignment: Alignment.center,
-                      child: !user.isLoading ? Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 20)) :
+                      child: !model.isLoading ? Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 20)) :
                       CircularProgressIndicator(),
                       height: 65,
                       width: 265,
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.all(Radius.circular(10))
-                    )))),
+                    )))
+                    ),
                     Padding(
                     padding: EdgeInsets.only(top: 35),
                     child: GestureDetector(
                       onTap: (){
-                        user.signOut();
+                        model.signOut();
                       },
                       child: Container(
                       alignment: Alignment.center,
@@ -129,6 +130,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ],
       ),
-    );
+    );});
   }
 }
